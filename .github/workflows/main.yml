@@ -3,12 +3,10 @@ name: Deploy Data Factory
 on:
   push:
     branches:
-      - adf_publish
-    paths:
-      - 'adf-test-data1000/*'
+      - master
   pull_request:
     branches:
-      - adf_publish
+      - master
 
 jobs:
   deploy:
