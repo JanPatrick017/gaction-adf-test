@@ -18,14 +18,11 @@ jobs:
     steps:
     - name: Checkout repository (main branch)
       uses: actions/checkout@v2
-      with:
-        ref: main
 
     - name: Checkout repository (adf_publish)
       uses: actions/checkout@v2
       with:
         ref: adf_publish
-        path: adf_publish
 
     - name: Set environment variables
       run: |
