@@ -3,10 +3,10 @@ name: Deploy Data Factory
 on:
   push:
     branches:
-      - master
+      - adf_publish
   pull_request:
     branches:
-      - master
+      - adf_publish
 
 jobs:
   deploy:
@@ -16,8 +16,16 @@ jobs:
         environment: [development, staging, production]
 
     steps:
-    - name: Checkout repository
+    - name: Checkout repository (main branch)
       uses: actions/checkout@v2
+      with:
+        ref: main
+
+    - name: Checkout repository (adf_publish)
+      uses: actions/checkout@v2
+      with:
+        ref: adf_publish
+        path: adf_publish
 
     - name: Set environment variables
       run: |
@@ -27,7 +35,7 @@ jobs:
           echo "DATA_FACTORY=adf-test-data1000" >> $GITHUB_ENV
         elif [ "${{ matrix.environment }}" == "staging" ]; then
           echo "RESOURCE_GROUP=rg-pgalvez" >> $GITHUB_ENV
-          echo "DATA_FACTORY=staging-data-factory" >> $GITHUB_ENV
+          echo "DATA_FACTORY=adf-test-data2000" >> $GITHUB_ENV
         elif [ "${{ matrix.environment }}" == "production" ]; then
           echo "RESOURCE_GROUP=rg-pgalvez" >> $GITHUB_ENV
           echo "DATA_FACTORY=prod-data-factory" >> $GITHUB_ENV
@@ -38,7 +46,7 @@ jobs:
       with:
         resourceGroupName: ${{ env.RESOURCE_GROUP }}
         dataFactoryName: ${{ env.DATA_FACTORY }}
-        armTemplateFile: 'ARMTemplateForFactory.json'
-        armTemplateParametersFile: 'ARMTemplateParametersForFactory.json'
+        armTemplateFile: './adf_publish/adf-test-data1000/ARMTemplateForFactory.json'
+        armTemplateParametersFile: './adf_publish/adf-test-data1000/ARMTemplateParametersForFactory.json'
         additionalParameters: ''
         skipAzModuleInstallation: 'false'
