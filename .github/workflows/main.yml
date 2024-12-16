@@ -24,6 +24,7 @@ jobs:
     - name: Checkout repository (adf_publish)
       uses: actions/checkout@v2
       with:
+        repository: gaction-adf-test
         ref: adf_publish
         path: ./
 
