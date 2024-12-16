@@ -4,16 +4,18 @@ on:
   push:
     branches:
       - master
+      - adf_publish
   pull_request:
     branches:
       - master
+      - adf_publish
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        environment: [development, staging, production]
+        environment: [development, staging]
 
     steps:
     - name: Checkout repository (main branch)
@@ -24,8 +26,9 @@ jobs:
     - name: Checkout repository (adf_publish)
       uses: actions/checkout@v2
       with:
+        repository: self
         ref: adf_publish
-        path: ./adf_publish
+        path: ./
 
     - name: Set environment variables
       run: |
