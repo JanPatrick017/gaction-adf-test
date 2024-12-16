@@ -34,7 +34,7 @@ jobs:
         fi
 
     - name: Deploy Azure Data Factory
-      uses: ./
+      uses: ./data-factory-deploy-action/
       with:
         resourceGroupName: ${{ env.RESOURCE_GROUP }}
         dataFactoryName: ${{ env.DATA_FACTORY }}
